@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>音乐</title>
+    <script type="text/javascript" src="/js/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container" id="app">
+        <div class="row">
+            <div class="page-header">
+               
+                <h2 class="text-center">
+                    <span class="glyphicon glyphicon-headphones" aria-hidden="true" ></span>
+                    音乐
+                </h2>
+            </div>
+            <!-- 列表组 开始 -->
+            <div class="column col-md-3">
+                <div  v-show="musicInfo.length != 0">
+                    <br>
+                    <p href="#" class="list-group-item active">
+                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true" ></span>
+                        歌曲列表
+                    </p>
+                    <div class="list-group pre-scrollable">
+                        <a href="#" class="list-group-item" v-for="(item,index) in musicInfo"
+                            @click="getMusic(item.id);getDetail(item.id);getReview(item.id)">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true" ></span>
+                            {{item.name}}
+                            <br>
+                            <small>{{item.artists[0].name}}</small>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 列表组 结束 -->
+            <!-- 中部 开始 -->
+            <div class="coumn col-md-6">
+                <div>
+                    <br>
+                    <!-- 搜索框 开始 -->
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="搜索音乐" v-model="query"
+                            @keyup.enter="queryMusic(query)">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" @click="queryMusic(query)">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
+                                搜索
+                            </button>
+                        </span>
+                    </div>
+                    <!-- 搜搜框 结束 -->
+
+
+                    <div class="row" v-show="imgShow">
+                        <!-- 歌曲详细信息 -->
+                        <div class="col-md-5">
+                            <br>
+                            <div class="panel panel-default center-block text-center">
+                                <div class="panel-heading">
+                                    <p class="h2">
+                                        
+                                        {{musicName}}
+                                    </p>
+                                </div>
+                                <div class="panel-body">
+                                    <p>歌手：{{singer}}</p>
+                                    <p>专辑：{{alName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 歌曲详细信息 -->
+                        <div class="col-md-7">
+                            <br>
+                            <img :src="imageSrc" alt="封面" class="img-thumbnail">
+                        </div>
+                        <!-- 图片 -->
+
+                        <!-- 图片 -->
+                    </div>
+
+                    <!-- 播放器 开始 -->
+                    <div>
+                        <audio :src="musicUrl" controls="controls" autoplay="autoplay" loop="loop" class="myaudio"
+                            v-show="imgShow"></audio>
+                    </div>
+                    <!-- 播放器 结束 -->
+                </div>
+            </div>
+            <!-- 中部 结束 -->
+
+
+
+        </div>
+        <!-- 列表组 开始 -->
+        <div class="column" v-show="imgShow">
+            <br>
+            <p href="#" class="list-group-item active">
+                <span class="glyphicon glyphicon-comment" aria-hidden="true" ></span>
+                热门评论
+            </p>
+            <div class="list-group pre-scrollable">
+                <p class="list-group-item" v-for="(item,index) in review">
+                    {{item.content}}
+                </p>
+            </div>
+        </div>
+        <!-- 列表组 结束 -->
+
+    </div>
+
+    <script type="text/javascript" src="/js/main1.js"></script>
+</body>
+
+</html>
